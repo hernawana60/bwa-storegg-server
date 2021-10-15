@@ -90,12 +90,7 @@ module.exports={
                 res.redirect('/voucher')
             }
 
-            let nominal = await Nominal({coinName, coinQuantity, price})
-            await nominal.save();
-
-            req.flash('alertMessage', "Berhasil tambah nominal")
-            req.flash('alertStatus', "success")
-            res.redirect('/nominal')
+          
         } catch (error) {
             req.flash('alertMessage', `${err.message}`)
             req.flash('alertStatus', 'danger')
