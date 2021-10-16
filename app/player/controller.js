@@ -28,16 +28,21 @@ module.exports = {
   detailPage: async (req, res) => {
     try {
       const { id } = req.params
-      const voucher = await Voucher.findOne({ _id: id })
+      const detail = await Voucher.findOne({ _id: id })
         .populate('category')
         .populate('nominals')
-        .populate('user', '_id name phoneNumber')
-
-      if (!voucher) {
+        .populate('user', '_id name phoneNumber');
+      const payment = await Payment.find().populate('banks');
+      if (!detail) {
         return res.status(404).json({ message: "voucher game tidak ditemukan.!" })
       }
 
-      res.status(200).json({ data: voucher })
+      res.status(200).json({ 
+        data: {
+          detail: detail,
+          payment: payment
+        }  
+      })
 
     } catch (err) {
 
